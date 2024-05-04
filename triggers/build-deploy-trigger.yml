@@ -86,13 +86,3 @@ spec:
     - ref: arbor-build-pipeline-build-git-tb
     template:
       name: arbor-build-pipeline-build-tt
-
----
-
-apiVersion: getambassador.io/v2
-kind: Mapping
-metadata:
-  name: arbor-build-pipeline-build-el-mapping
-spec:
-  prefix: /arbor-build-pipeline-build-mapping/
-  service: el-arbor-build-pipeline-build-el:8080
