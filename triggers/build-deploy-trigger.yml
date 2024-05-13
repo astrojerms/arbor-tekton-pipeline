@@ -1,4 +1,4 @@
-apiVersion: triggers.tekton.dev/v1alpha1
+apiVersion: triggers.tekton.dev/v1beta1
 kind: TriggerTemplate
 metadata:
   name: arbor-build-pipeline-build-tt
@@ -8,7 +8,7 @@ spec:
   - name: git-app-repo-name
   - name: git-app-repo-revision
   resourcetemplates:
-  - apiVersion: tekton.dev/v1alpha1
+  - apiVersion: tekton.dev/v1beta1
     kind: PipelineRun
     metadata:
       generateName: arbor-build-pipeline-build-deploy-pipeline-run-
@@ -28,7 +28,7 @@ spec:
 
 ---
 
-apiVersion: triggers.tekton.dev/v1alpha1
+apiVersion: triggers.tekton.dev/v1beta1
 kind: TriggerBinding
 metadata:
   name: arbor-build-pipeline-build-git-tb
