@@ -9,37 +9,6 @@ spec:
   - name: git-app-repo-revision
   resourcetemplates:
   - apiVersion: tekton.dev/v1alpha1
-    kind: PipelineResource
-    metadata:
-      name: git-app-repo-$(uid)
-      namespace: arbor-build-pipeline
-      labels:
-        pipeline: tekton
-        deploy: argocd
-    spec:
-      params:
-      - name: url
-        value: $(tt.params.git-app-repo-url)
-      - name: revision
-        value: $(tt.params.git-app-repo-revision)
-      - name: git-app-repo-name
-        value: $(tt.params.git-app-repo-name)
-      type: git
-  - apiVersion: tekton.dev/v1alpha1
-    kind: PipelineResource
-    metadata:
-      name: image-registry-$(uid)
-      namespace: arbor-build-pipeline
-      labels:
-        pipeline: tekton
-        deploy: argocd
-    spec:
-      params:
-      - name: url
-        # Replace <docker_registry_name> with your docker registry name (e.g. my-acr.azurecr.io)
-        value: 'docker.io'
-      type: image
-  - apiVersion: tekton.dev/v1alpha1
     kind: PipelineRun
     metadata:
       generateName: arbor-build-pipeline-build-deploy-pipeline-run-
@@ -51,13 +20,11 @@ spec:
       serviceAccountName: pipeline-sa
       pipelineRef:
         name: arbor-build-pipeline-build-deploy-pipeline
-      resources:
+      params:
       - name: git-app-repo
-        resourceRef:
-          name: git-app-repo-$(uid)
-      - name: image-registry
-        resourceRef:
-          name: image-registry-$(uid)
+        value: $(tt.params.git-app-repo-name)
+      - name: git-url
+        value: $(tt.params.git-app-repo-url)
 
 ---
 
@@ -71,11 +38,11 @@ spec:
     # Replace with path to the JSON resource you want, based on the Git provider that you're using (e.g. for AzureDevOps: resource.repository.remoteUrl)
     value: $(body.repository.url)
   - name: git-app-repo-revision
-    value: master
+    value: main
 
 ---
 
-apiVersion: triggers.tekton.dev/v1alpha1
+apiVersion: triggers.tekton.dev/v1beta1
 kind: EventListener
 metadata:
   name: arbor-build-pipeline-build-el

@@ -4,12 +4,22 @@ kind: Pipeline
 metadata:
   name: arbor-build-pipeline-build-deploy-pipeline
 spec:
-  resources:
+  params:
+    - name: git-url
+    - name: git-revision
     - name: git-app-repo
-      type: git
-    - name: image-registry
-      type: image
   tasks:
+    - name: fetch-from-git
+      taskRef:
+        name: git-clone
+      params:
+        - name: url
+          value: $(params.git-url)
+        - name: revision
+          value: $(params.git-revision)
+      workspaces:
+        - name: output
+          workspace: git-source
     - name: build-docker-image
       taskRef:
         name: build-docker-image
