@@ -17,12 +17,15 @@ rules:
   resources:
   - pipelineruns
   - pipelineresources
+  - taskruns
   verbs:
   - create
 - apiGroups:
   - ""
   resources:
   - configmaps
+  - secrets
+  - serviceaccounts
   verbs:
   - get
   - list
