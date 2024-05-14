@@ -47,7 +47,7 @@ kind: EventListener
 metadata:
   name: arbor-build-pipeline-build-el
 spec:
-  serviceAccountName: tekton-triggers-admin
+  serviceAccountName: pipeline-sa
   triggers:
   - bindings:
     - ref: arbor-build-pipeline-build-git-tb
