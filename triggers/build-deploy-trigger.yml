@@ -52,4 +52,4 @@ spec:
   - bindings:
     - ref: arbor-build-pipeline-build-git-tb
     template:
-      name: arbor-build-pipeline-build-tt
+      ref: arbor-build-pipeline-build-tt
